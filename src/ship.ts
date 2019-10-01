@@ -1,18 +1,16 @@
 import Sprinte from './sprinte';
 import Interaction from './interaction';
 import IAnimation from './IAnimation';
-import Animation from './Animation';
+import Animation from './animation';
 import Shot from './shot';
-import {DIRACTION} from './diraction';
+import {DIRACTION} from './DIRACTION';
 
-const linesNum = 1;
-const columnsNum = 1;
 
 
 export default class Ship extends Sprinte implements IAnimation {
 
     waking: boolean = false;
-    diraction = DIRACTION.RIGHT
+    diraction = DIRACTION.UP
     speed: number = 1;
     rotate = 0;
     shoting = false;
@@ -23,22 +21,26 @@ export default class Ship extends Sprinte implements IAnimation {
         this.y = context.canvas.height - 40;
     }
 
-    verifyDiraction(diraction :DIRACTION) {
-        return this.interations.keyPressed(diraction) && !this.waking;
+    verifyDiraction(diraction :number) {
+        return this.interations.keyPressed(diraction) && !this.waking &&
+        !this.interations.keyPressed(DIRACTION.SPACE);
     }
 
     isWalking() {
         let walking = false;        
-        for(const diraction in DIRACTION) 
-            if(this.verifyDiraction(DIRACTION.RIGHT)) {
+        Object.keys(DIRACTION).forEach((el:string) => {
+            const diraction = DIRACTION[el];
+            if(this.verifyDiraction(diraction)) {
                 walking = true;
+                this.diraction = diraction;
             }
+        });
         this.waking = walking;
     }
 
     addShot() {
         if (this.interations.keyPressed(DIRACTION.SPACE) && !this.shoting) {
-            const shot = new Shot(this.context, this); 
+            const shot = new Shot(this.context, this, this.animation); 
             this.animation.sprintes.push(shot);
             shot.draw();
             this.shoting = true;
@@ -53,16 +55,14 @@ export default class Ship extends Sprinte implements IAnimation {
         if (this.verifyDiraction(DIRACTION.RIGHT)) {
             this.x += this.speed;
             this.rotate = 5;
-        }
-        if (this.verifyDiraction(DIRACTION.LEFT)) {
+        }else if (this.verifyDiraction(DIRACTION.LEFT)) {
             this.x -= this.speed;
             this.rotate = 15;
-        }
-        if (this.verifyDiraction(DIRACTION.UP)) {
+        }else if (this.verifyDiraction(DIRACTION.UP)) {
             this.y -= this.speed;
             this.rotate = 0;
         }
-        if (this.verifyDiraction(DIRACTION.DOWN)) {
+        else if (this.verifyDiraction(DIRACTION.DOWN)) {
             this.y += this.speed;
             this.rotate = 10;
         } 

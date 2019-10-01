@@ -12,6 +12,10 @@ class Animation {
         this.images.addImage(sprinte, imagePahth);
         this.addSprint(sprinte);
     }
+    removeSprinte(sprinte :IAnimation) {
+        const index = this.sprintes.indexOf(sprinte);
+        this.sprintes.splice(index, 1);
+    }
 
     addSprint(sprinte :IAnimation) { 
         this.sprintes.push(sprinte);
