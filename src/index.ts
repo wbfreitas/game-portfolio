@@ -1,6 +1,5 @@
 import Animation from './animation';
 import Interaction from './interaction';
-import Imagens from './imagens';
 import Skill from './skills';
 import Ship from './ship';
 
@@ -12,6 +11,12 @@ function resizeCanvas() {
   canvas.setAttribute('height', h);
 }
 
+const skills = [
+  {imagePath: 'java.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'github.png'}
+];
+
 
 (function() {
       resizeCanvas();
@@ -20,21 +25,16 @@ function resizeCanvas() {
 
       const animation = new Animation(context, canvas);
       const interaction = new Interaction(document);
-      const images = new Imagens(); 
+      const ship = new Ship(context, interaction, animation);
 
-      const java =  new Skill(context, interaction);
-      const js =  new Skill(context, interaction);
-      const ship = new Ship(context, interaction);
+       animation.addSprintAndImg(ship, 'nave.png');
 
-      images.addImage(java, 'java.png');
-      images.addImage(js, 'js.png');
-      images.addImage(ship, 'nave.png');
+       skills.forEach(skill => {
+        const s =  new Skill(context, interaction);
+        animation.addSprintAndImg(s, skill.imagePath);
+       });
 
-      animation.addSprint(java);
-      animation.addSprint(js);
-      animation.addSprint(ship);
-
-      images.load(() => {
+      animation.images.load(() => {
         animation.enable();
       });
 })();

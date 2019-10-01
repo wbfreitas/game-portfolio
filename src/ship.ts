@@ -1,23 +1,22 @@
 import Sprinte from './sprinte';
 import Interaction from './interaction';
 import IAnimation from './IAnimation';
+import Animation from './Animation';
+import Shot from './shot';
+import {DIRACTION} from './diraction';
 
 const linesNum = 1;
 const columnsNum = 1;
 
-enum DIRACTION {
-    LEFT = 37,
-    UP = 38,
-    RIGHT = 39,
-    DOWN = 40
-}
+
 export default class Ship extends Sprinte implements IAnimation {
 
     waking: boolean = false;
     diraction = DIRACTION.RIGHT
     speed: number = 1;
     rotate = 0;
-    constructor(context: any, private interations: Interaction) {
+    shoting = false;
+    constructor(context: any, private interations: Interaction, private animation: Animation) {
         super(context, 1, 1);
         this.interval = 60;
         this.x = 200;
@@ -28,17 +27,29 @@ export default class Ship extends Sprinte implements IAnimation {
         return this.interations.keyPressed(diraction) && !this.waking;
     }
 
-
     isWalking() {
         let walking = false;        
         for(const diraction in DIRACTION) 
-            if(this.verifyDiraction(DIRACTION.RIGHT)) 
-            walking = true;
+            if(this.verifyDiraction(DIRACTION.RIGHT)) {
+                walking = true;
+            }
         this.waking = walking;
+    }
+
+    addShot() {
+        if (this.interations.keyPressed(DIRACTION.SPACE) && !this.shoting) {
+            const shot = new Shot(this.context, this); 
+            this.animation.sprintes.push(shot);
+            shot.draw();
+            this.shoting = true;
+        } else if(!this.interations.keyPressed(DIRACTION.SPACE))  {
+            this.shoting = false;
+        }
     }
 
     update() {
         this.isWalking();
+        this.addShot();
         if (this.verifyDiraction(DIRACTION.RIGHT)) {
             this.x += this.speed;
             this.rotate = 5;

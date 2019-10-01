@@ -1,10 +1,19 @@
+import Imagens from './imagens';
+import IAnimation from './IAnimation';
+
 class Animation {
     sprintes: Array<any> = [];
     isEnable: boolean = true;
+    images = new Imagens(); 
     constructor(private context:any, private canvas:any) {
     }
 
-    addSprint(sprinte:any) { 
+    addSprintAndImg(sprinte :IAnimation, imagePahth :string) { 
+        this.images.addImage(sprinte, imagePahth);
+        this.addSprint(sprinte);
+    }
+
+    addSprint(sprinte :IAnimation) { 
         this.sprintes.push(sprinte);
         this.nextFrame();
     }
