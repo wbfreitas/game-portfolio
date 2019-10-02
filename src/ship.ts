@@ -71,6 +71,18 @@ export default class Ship extends Sprinte implements IAnimation {
         } 
       }
 
+  crossScreen() {
+    if(this.x < 0) {
+        this.x = this.context.canvas.width;
+    }else if(this.x > this.context.canvas.width) {
+        this.x = 0;
+    } else if(this.y < 0) {
+        this.y = this.context.canvas.height;
+    } else if(this.y > this.context.canvas.height) {
+        this.y = 0;
+    }
+  }
+
   conflite(conflitent: IAnimation) {
   }
 
@@ -78,6 +90,7 @@ export default class Ship extends Sprinte implements IAnimation {
        this.context.save();
        this.context.translate(this.x, this.y);
        this.context.rotate(this.rotate / Math.PI);
+       this.crossScreen();
        this.context.drawImage(this.image, -15, -15, this.width, this.height);
        this.context.restore();
    }
