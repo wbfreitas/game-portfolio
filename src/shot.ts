@@ -11,6 +11,7 @@ export default class Shot implements IAnimation {
   x = 0;
   y = 0;
   diraction: number;
+  type = 'shot';
   constructor(private context :any,private ship: Ship, private animation :Animation) {
     this.x = ship.x;
     this.y = ship.y;
@@ -21,7 +22,6 @@ export default class Shot implements IAnimation {
     if(this.y <= 0 || this.y > this.context.canvas.height 
        || this.x <= 0 || this.x >= this.context.canvas.width ) 
       this.animation.removeSprinte(this);
-    console.log('aqui');
   }
 
   update() {
@@ -46,15 +46,12 @@ export default class Shot implements IAnimation {
     const ctx = this.context;
     ctx.save();
     ctx.fillStyle = this.color;
-    if(this.diraction == DIRACTION.LEFT || this.diraction == DIRACTION.RIGHT)
+    if(this.diraction == DIRACTION.LEFT || this.diraction == DIRACTION.RIGHT) {
       ctx.fillRect(this.x, this.y, this.height, this.width);
+    }
     else
       ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.restore();
-
-  }
-
-  setImage() {
 
   }
 }
