@@ -2,6 +2,7 @@ import Sprinte from './sprinte';
 import Interaction from './interaction';
 import IAnimation from './IAnimation';
 import Animation from './animation';
+import Explosion from './explosion';
 import Shot from './shot';
 import {DIRACTION} from './DIRACTION';
 
@@ -44,8 +45,10 @@ export default class Ship extends Sprinte implements IAnimation {
     addShot() {
         if (this.interations.keyPressed(DIRACTION.SPACE) && !this.shoting) {
             const shot = new Shot(this.context, this, this.animation); 
-            this.animation.sprintes.push(shot);
+            const exp = new Explosion(this.context, 100, 100);
             shot.draw();
+            exp.draw();
+            this.animation.sprintes.push(shot);
             this.shoting = true;
         } else if(!this.interations.keyPressed(DIRACTION.SPACE))  {
             this.shoting = false;
