@@ -7,6 +7,9 @@ export default class Skill extends Sprinte implements IAnimation {
     speedX: number = 0.1;
     speedY: number = 0.1;
     rotate = 0;
+    width = 30;
+    height = 30;
+    type = 'skill';
     constructor(context: any, private interations: Interaction) {
         super(context, 1, 1);
         this.interval = 60;
@@ -31,8 +34,6 @@ export default class Skill extends Sprinte implements IAnimation {
 
        this.x += this.speedX;
        this.y += this.speedY; 
-
-
    } 
 
    draw() {
@@ -41,8 +42,9 @@ export default class Skill extends Sprinte implements IAnimation {
       this.context.translate(this.x, this.y);
       this.context.rotate(this.rotate / 180 / Math.PI);
 
-         this.context.drawImage(this.image, -16, -16, 30, 30);
-
+         this.context.drawImage(this.image, -16, -16, this.width, this.height);
+         this.context.fillStyle = 'red';
+              this.context.fill();
          this.context.restore();
 
          this.rotate += 2;
