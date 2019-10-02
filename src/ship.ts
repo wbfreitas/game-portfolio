@@ -5,10 +5,6 @@ import Animation from './Animation';
 import Shot from './shot';
 import {DIRACTION} from './diraction';
 
-const linesNum = 1;
-const columnsNum = 1;
-
-
 export default class Ship extends Sprinte implements IAnimation {
 
     waking: boolean = false;
