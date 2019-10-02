@@ -2,12 +2,16 @@
 import Sprinte from './sprinte';
 import Interaction from './interaction';
 import IAnimation from './IAnimation';
+import Animation from './Animation';
 
 export default class Skill extends Sprinte implements IAnimation {
     speedX: number = 0.1;
     speedY: number = 0.1;
     rotate = 0;
-    constructor(context: any, private interations: Interaction) {
+    width = 30;
+    height = 30;
+    type = 'skill';
+    constructor(context: any, private interations: Interaction, private animation: Animation) {
         super(context, 1, 1);
         this.interval = 60;
         this.x = Math.floor(Math.random() * this.context.canvas.width) + 1;;
@@ -35,13 +39,21 @@ export default class Skill extends Sprinte implements IAnimation {
 
    } 
 
+  conflite(conflitent: IAnimation) {
+    switch (conflitent.type) {
+       case 'shot':
+           this.animation.removeSprinte(this);
+           break;
+    } 
+  }
+
    draw() {
 
       this.context.save();
       this.context.translate(this.x, this.y);
       this.context.rotate(this.rotate / 180 / Math.PI);
 
-         this.context.drawImage(this.image, -16, -16, 30, 30);
+         this.context.drawImage(this.image, -16, -16, this.width, this.height);
 
          this.context.restore();
 

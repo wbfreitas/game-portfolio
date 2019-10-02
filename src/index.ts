@@ -30,7 +30,7 @@ const skills = [
        animation.addSprintAndImg(ship, 'nave.png');
 
        skills.forEach(skill => {
-        const s =  new Skill(context, interaction);
+        const s =  new Skill(context, interaction, animation);
         animation.addSprintAndImg(s, skill.imagePath);
        });
 

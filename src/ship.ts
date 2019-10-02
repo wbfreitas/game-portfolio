@@ -14,6 +14,9 @@ export default class Ship extends Sprinte implements IAnimation {
     speed: number = 1;
     rotate = 0;
     shoting = false;
+    type = 'ship';
+    width = 30;
+    height = 40;
     constructor(context: any, private interations: Interaction, private animation: Animation) {
         super(context, 1, 1);
         this.interval = 60;
@@ -68,11 +71,14 @@ export default class Ship extends Sprinte implements IAnimation {
         } 
       }
 
+  conflite(conflitent: IAnimation) {
+  }
+
    draw() {
        this.context.save();
        this.context.translate(this.x, this.y);
        this.context.rotate(this.rotate / Math.PI);
-       this.context.drawImage(this.image, -15, -15, 30, 40);
+       this.context.drawImage(this.image, -15, -15, this.width, this.height);
        this.context.restore();
    }
 }
