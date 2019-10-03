@@ -6,8 +6,8 @@ import Animation from './Animation';
 import Explosion from './explosion';
 
 export default class Skill extends Sprinte implements IAnimation {
-    speedX: number = 0.1;
-    speedY: number = 0.1;
+    speedX: number = 0.3;
+    speedY: number = 0.3;
     rotate = 0;
     width = 30;
     height = 30;
@@ -17,46 +17,54 @@ export default class Skill extends Sprinte implements IAnimation {
         this.interval = 60;
         this.x = Math.floor(Math.random() * this.context.canvas.width) + 1;;
         this.y = Math.floor(Math.random() * this.context.canvas.height) + 1;;
+        if (Math.floor(Math.random() * (2))) {
+            this.changeDiraction();
+        }
     }
 
-   update() {
-      var ctx = this.context;
-       if (this.x > ctx.canvas.width - 30)
-           this.speedX *= -1;
-        else if(this.x < 0) {
-            this.speedX = 0.1;
+
+    changeDiraction() {
+        this.speedX *= -1;
+        this.speedY *= -1;
+    }
+
+    update() {
+        var ctx = this.context;
+        if (this.x > ctx.canvas.width - 30 || this.x < 0)
+            this.speedX *= -1;
+
+        if (this.y > ctx.canvas.height - 30 || this.y < 0)
+            this.speedY *= -1;
+
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+    }
+
+    conflite(conflitent: IAnimation) {
+        switch (conflitent.type) {
+            case 'shot':
+                new Explosion(this.context, this.x, this.y, this.animation);
+                this.animation.removeSprinte(this);
+                break;
+            case 'skill':
+                this.changeDiraction();
+                this.x += this.speedX;
+                this.y += this.speedY;
+                break;
         }
+    }
 
-       if (this.y > ctx.canvas.height - 30) {
-           this.speedY *= -1;
-       }
-        else if(this.y < 0) {
-            this.speedY = 0.1;
-        }
+    draw() {
 
-       this.x += this.speedX;
-       this.y += this.speedY; 
-   } 
+        this.context.save();
+        this.context.translate(this.x, this.y);
+        this.context.rotate(this.rotate / 180 / Math.PI);
 
-  conflite(conflitent: IAnimation) {
-    switch (conflitent.type) {
-       case 'shot':
-            new Explosion(this.context, this.x, this.y, this.animation);
-           this.animation.removeSprinte(this);
-           break;
-    } 
-  }
+        this.context.drawImage(this.image, -16, -16, this.width, this.height);
 
-   draw() {
+        this.context.restore();
 
-      this.context.save();
-      this.context.translate(this.x, this.y);
-      this.context.rotate(this.rotate / 180 / Math.PI);
-
-         this.context.drawImage(this.image, -16, -16, this.width, this.height);
-
-         this.context.restore();
-
-         this.rotate += 2;
-   }
+        this.rotate += 2;
+    }
 }

@@ -6,11 +6,12 @@ import Explosion from './explosion';
 import Shot from './shot';
 import { DIRACTION } from './DIRACTION';
 
+
 export default class Ship extends Sprinte implements IAnimation {
 
     waking: boolean = false;
     diraction = DIRACTION.UP
-    speed: number = 1;
+    speed: number = 6;
     rotate = 0;
     shoting = false;
     type = 'ship';

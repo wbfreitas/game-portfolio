@@ -14,6 +14,14 @@ function resizeCanvas() {
 const skills = [
   {imagePath: 'java.png'},
   {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
+  {imagePath: 'js.png'},
   {imagePath: 'github.png'}
 ];
 
@@ -33,6 +41,7 @@ const skills = [
         const s =  new Skill(context, interaction, animation);
         animation.addSprintAndImg(s, skill.imagePath);
        });
+       animation.nextFrame();
 
       animation.images.load(() => {
         animation.enable();

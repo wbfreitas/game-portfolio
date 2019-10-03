@@ -11,6 +11,7 @@ export default class Shot implements IAnimation {
   x = 0;
   y = 0;
   diraction: number;
+  speed = 5;
   type = 'shot';
   constructor(private context :any,private ship: Ship, private animation :Animation) {
     this.x = ship.x;
@@ -47,16 +48,16 @@ export default class Shot implements IAnimation {
   update() {
     switch(this.diraction) {
       case DIRACTION.UP:
-        this.y--;
+        this.y -= this.speed;
         break;
       case DIRACTION.DOWN:
-        this.y++;
+        this.y += this.speed;
         break;
       case DIRACTION.RIGHT:
-        this.x++;
+        this.x += this.speed;
         break;
       case DIRACTION.LEFT:
-        this.x--;
+        this.x -= this.speed;
         break;
     }
     this.destroy();

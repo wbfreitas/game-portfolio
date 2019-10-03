@@ -19,7 +19,6 @@ class Animation {
 
     addSprint(sprinte: IAnimation) {
         this.sprintes.push(sprinte);
-        this.nextFrame();
     }
 
     enable() {
@@ -44,8 +43,8 @@ class Animation {
         this.sprintes.forEach(sprint => {
             sprint.draw();
         });
-        this.managerConflictors();
         requestAnimationFrame(() => this.nextFrame());
+        this.managerConflictors();
     }
 
     bum(a: IAnimation, b: IAnimation) {
