@@ -58,7 +58,7 @@ class Animation {
     managerConflictors() {
         this.sprintes.forEach((a :IAnimation) => {
             this.sprintes.forEach((b :IAnimation) => {
-                if (a != b && this.bum(a, b)) {
+                if (a != b && this.bum(a, b) && a.type != 'particula' && b.type != 'particula') {
                     a.conflite(b);
                     b.conflite(a);
                 }

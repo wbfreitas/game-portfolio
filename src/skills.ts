@@ -3,6 +3,7 @@ import Sprinte from './sprinte';
 import Interaction from './interaction';
 import IAnimation from './IAnimation';
 import Animation from './Animation';
+import Explosion from './explosion';
 
 export default class Skill extends Sprinte implements IAnimation {
     speedX: number = 0.1;
@@ -35,13 +36,12 @@ export default class Skill extends Sprinte implements IAnimation {
 
        this.x += this.speedX;
        this.y += this.speedY; 
-
-
    } 
 
   conflite(conflitent: IAnimation) {
     switch (conflitent.type) {
        case 'shot':
+            new Explosion(this.context, this.x, this.y, this.animation);
            this.animation.removeSprinte(this);
            break;
     } 

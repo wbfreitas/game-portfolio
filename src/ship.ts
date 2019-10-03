@@ -4,9 +4,7 @@ import IAnimation from './IAnimation';
 import Animation from './animation';
 import Explosion from './explosion';
 import Shot from './shot';
-import {DIRACTION} from './DIRACTION';
-
-
+import { DIRACTION } from './DIRACTION';
 
 export default class Ship extends Sprinte implements IAnimation {
 
@@ -25,16 +23,16 @@ export default class Ship extends Sprinte implements IAnimation {
         this.y = context.canvas.height - 40;
     }
 
-    verifyDiraction(diraction :number) {
+    verifyDiraction(diraction: number) {
         return this.interations.keyPressed(diraction) && !this.waking &&
-        !this.interations.keyPressed(DIRACTION.SPACE);
+            !this.interations.keyPressed(DIRACTION.SPACE);
     }
 
     isWalking() {
-        let walking = false;        
-        Object.keys(DIRACTION).forEach((el:string) => {
+        let walking = false;
+        Object.keys(DIRACTION).forEach((el: string) => {
             const diraction = DIRACTION[el];
-            if(this.verifyDiraction(diraction)) {
+            if (this.verifyDiraction(diraction)) {
                 walking = true;
                 this.diraction = diraction;
             }
@@ -44,13 +42,11 @@ export default class Ship extends Sprinte implements IAnimation {
 
     addShot() {
         if (this.interations.keyPressed(DIRACTION.SPACE) && !this.shoting) {
-            const shot = new Shot(this.context, this, this.animation); 
-            const exp = new Explosion(this.context, 100, 100);
+            const shot = new Shot(this.context, this, this.animation);
             shot.draw();
-            exp.draw();
             this.animation.sprintes.push(shot);
             this.shoting = true;
-        } else if(!this.interations.keyPressed(DIRACTION.SPACE))  {
+        } else if (!this.interations.keyPressed(DIRACTION.SPACE)) {
             this.shoting = false;
         }
     }
@@ -61,40 +57,42 @@ export default class Ship extends Sprinte implements IAnimation {
         if (this.verifyDiraction(DIRACTION.RIGHT)) {
             this.x += this.speed;
             this.rotate = 5;
-        }else if (this.verifyDiraction(DIRACTION.LEFT)) {
+        } else if (this.verifyDiraction(DIRACTION.LEFT)) {
             this.x -= this.speed;
             this.rotate = 15;
-        }else if (this.verifyDiraction(DIRACTION.UP)) {
+        } else if (this.verifyDiraction(DIRACTION.UP)) {
             this.y -= this.speed;
             this.rotate = 0;
         }
         else if (this.verifyDiraction(DIRACTION.DOWN)) {
             this.y += this.speed;
             this.rotate = 10;
-        } 
-      }
-
-  crossScreen() {
-    if(this.x < 0) {
-        this.x = this.context.canvas.width;
-    }else if(this.x > this.context.canvas.width) {
-        this.x = 0;
-    } else if(this.y < 0) {
-        this.y = this.context.canvas.height;
-    } else if(this.y > this.context.canvas.height) {
-        this.y = 0;
+        }
     }
-  }
 
-  conflite(conflitent: IAnimation) {
-  }
+    crossScreen() {
+        if (this.x < 0) {
+            this.x = this.context.canvas.width;
+        } else if (this.x > this.context.canvas.width) {
+            this.x = 0;
+        } else if (this.y < 0) {
+            this.y = this.context.canvas.height;
+        } else if (this.y > this.context.canvas.height) {
+            this.y = 0;
+        }
+    }
 
-   draw() {
-       this.context.save();
-       this.context.translate(this.x, this.y);
-       this.context.rotate(this.rotate / Math.PI);
-       this.crossScreen();
-       this.context.drawImage(this.image, -15, -15, this.width, this.height);
-       this.context.restore();
-   }
+    conflite(conflitent: IAnimation) {
+        new Explosion(this.context, this.x, this.y, this.animation);
+        this.animation.removeSprinte(this);
+    }
+
+    draw() {
+        this.context.save();
+        this.context.translate(this.x, this.y);
+        this.context.rotate(this.rotate / Math.PI);
+        this.crossScreen();
+        this.context.drawImage(this.image, -15, -15, this.width, this.height);
+        this.context.restore();
+    }
 }
