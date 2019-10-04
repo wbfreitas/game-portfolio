@@ -43,27 +43,26 @@ export default class Skill extends Sprinte implements IAnimation {
     }
 
     conflite(conflitent: IAnimation) {
-        console.log(conflitent);
         if (conflitent instanceof Shot) {
             new Explosion(this.context, this.x, this.y, this.animation);
             this.animation.removeSprinte(this);
-        } else if (conflitent  instanceof Skill) {
+        } else if (conflitent instanceof Skill) {
             this.changeDiraction();
             this.x += this.speedX;
             this.y += this.speedY;
         }
     }
 
-draw() {
+    draw() {
 
-    this.context.save();
-    this.context.translate(this.x, this.y);
-    this.context.rotate(this.rotate / 180 / Math.PI);
+        this.context.save();
+        this.context.translate(this.x, this.y);
+        this.context.rotate(this.rotate / 180 / Math.PI);
 
-    this.context.drawImage(this.image, -16, -16, this.width, this.height);
+        this.context.drawImage(this.image, -16, -16, this.width, this.height);
 
-    this.context.restore();
+        this.context.restore();
 
-    this.rotate += this.rotateSpeed;
-}
+        this.rotate += this.rotateSpeed;
+    }
 }
