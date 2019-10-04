@@ -6,12 +6,13 @@ import Animation from './Animation';
 import Explosion from './explosion';
 
 export default class Skill extends Sprinte implements IAnimation {
-    speedX: number = 0.3;
-    speedY: number = 0.3;
+    speedX: number = 0.2;
+    speedY: number = 0.2;
     rotate = 0;
     width = 30;
     height = 30;
     type = 'skill';
+    rotateSpeed = 2;
     constructor(context: any, private interations: Interaction, private animation: Animation) {
         super(context, 1, 1);
         this.interval = 60;
@@ -26,6 +27,7 @@ export default class Skill extends Sprinte implements IAnimation {
     changeDiraction() {
         this.speedX *= -1;
         this.speedY *= -1;
+        this.rotateSpeed  *= -1;
     }
 
     update() {
@@ -65,6 +67,6 @@ export default class Skill extends Sprinte implements IAnimation {
 
         this.context.restore();
 
-        this.rotate += 2;
+        this.rotate += this.rotateSpeed;
     }
 }
