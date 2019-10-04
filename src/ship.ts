@@ -17,16 +17,26 @@ export default class Ship extends Sprinte implements IAnimation {
     type = 'ship';
     width = 30;
     height = 40;
+    imunne = true;
+    timeInumme = 0;
     constructor(context: any, private interations: Interaction, private animation: Animation) {
         super(context, 1, 1);
         this.interval = 60;
         this.x = 200;
         this.y = context.canvas.height - 40;
+        this.StartPosition();
     }
 
     verifyDiraction(diraction: number) {
         return this.interations.keyPressed(diraction) && !this.waking &&
             !this.interations.keyPressed(DIRACTION.SPACE);
+    }
+
+    StartPosition() {
+        this.x = (this.context.canvas.width / 2 ) - this.width; 
+        this.y = (this.context.canvas.height / 2 ) - this.height; 
+        this.timeInumme = 0;
+        this.imunne = true;
     }
 
     isWalking() {
@@ -84,11 +94,25 @@ export default class Ship extends Sprinte implements IAnimation {
     }
 
     conflite(conflitent: IAnimation) {
+        if(this.imunne)
+            return false;
         new Explosion(this.context, this.x, this.y, this.animation);
-        this.animation.removeSprinte(this);
+        this.StartPosition();
+    }
+
+    flashing() {
+        this.timeInumme++;
+        if (this.imunne && this.timeInumme < 150) {
+            return (this.timeInumme % 15)
+        }
+        this.imunne = false;
+        return false;
     }
 
     draw() {
+        if(this.flashing())
+            return false;
+
         this.context.save();
         this.context.translate(this.x, this.y);
         this.context.rotate(this.rotate / Math.PI);

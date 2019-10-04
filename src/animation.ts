@@ -37,6 +37,7 @@ class Animation {
         if (!this.isEnable) return;
 
         this.cleanScreen();
+        this.managerConflictors();
         this.sprintes.forEach(sprint => {
             sprint.update();
         });
@@ -44,7 +45,6 @@ class Animation {
             sprint.draw();
         });
         requestAnimationFrame(() => this.nextFrame());
-        this.managerConflictors();
     }
 
     bum(a: IAnimation, b: IAnimation) {
