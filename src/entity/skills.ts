@@ -1,4 +1,3 @@
-
 import Sprinte from '../sprinte';
 import Interaction from './interaction';
 import IAnimation from '../structure/ianimation';
