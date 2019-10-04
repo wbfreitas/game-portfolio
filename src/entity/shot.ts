@@ -1,7 +1,7 @@
-import IAnimation from './IAnimation';
-import Animation from './animation';
+import IAnimation from '../structure/ianimation';
+import Animation from '../animation';
 import Ship from './ship';
-import { DIRACTION } from './DIRACTION';
+import { DIRACTION } from '../structure/diraction';
 
 export default class Shot implements IAnimation {
   color = 'yellow';
@@ -11,8 +11,7 @@ export default class Shot implements IAnimation {
   x = 0;
   y = 0;
   diraction: number;
-  speed = 5;
-  type = 'shot';
+  speed = 3;
   constructor(private context: any, private ship: Ship, private animation: Animation) {
     this.x = ship.x;
     this.y = ship.y;
@@ -46,7 +45,9 @@ export default class Shot implements IAnimation {
   }
   update() {
     switch (this.diraction) {
-      case DIRACTION.UP: this.y -= this.speed; break;
+      case DIRACTION.UP:
+         this.y -= this.speed;
+          break;
       case DIRACTION.DOWN:
         this.y += this.speed;
         break;

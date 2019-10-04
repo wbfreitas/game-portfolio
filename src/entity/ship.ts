@@ -1,11 +1,10 @@
-import Sprinte from './sprinte';
+import Sprinte from '../sprinte';
 import Interaction from './interaction';
-import IAnimation from './IAnimation';
-import Animation from './animation';
+import IAnimation from '../structure/IAnimation';
+import Animation from '../animation';
 import Explosion from './explosion';
 import Shot from './shot';
-import { DIRACTION } from './DIRACTION';
-
+import { DIRACTION } from '../structure/diraction';
 
 export default class Ship extends Sprinte implements IAnimation {
 
@@ -14,7 +13,6 @@ export default class Ship extends Sprinte implements IAnimation {
     speed: number = 6;
     rotate = 0;
     shoting = false;
-    type = 'ship';
     width = 30;
     height = 40;
     imunne = true;
@@ -33,8 +31,8 @@ export default class Ship extends Sprinte implements IAnimation {
     }
 
     StartPosition() {
-        this.x = (this.context.canvas.width / 2 ) - this.width; 
-        this.y = (this.context.canvas.height / 2 ) - this.height; 
+        this.x = (this.context.canvas.width / 2) - this.width;
+        this.y = (this.context.canvas.height / 2) - this.height;
         this.timeInumme = 0;
         this.imunne = true;
     }
@@ -94,7 +92,7 @@ export default class Ship extends Sprinte implements IAnimation {
     }
 
     conflite(conflitent: IAnimation) {
-        if(this.imunne)
+        if (this.imunne)
             return false;
         new Explosion(this.context, this.x, this.y, this.animation);
         this.StartPosition();
@@ -110,7 +108,7 @@ export default class Ship extends Sprinte implements IAnimation {
     }
 
     draw() {
-        if(this.flashing())
+        if (this.flashing())
             return false;
 
         this.context.save();

@@ -1,6 +1,5 @@
-import IAnimation from './IAnimation';
-import Animation from './Animation';
-
+import IAnimation from '../structure/ianimation';
+import Animation from '../animation';
 
 function randInt(min: number, max: number, positive: boolean) {
 
@@ -19,7 +18,7 @@ function randColor(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-class Particle implements IAnimation {
+export class Particle implements IAnimation {
     xv: number;
     yv: number;
     size: number;
@@ -30,12 +29,11 @@ class Particle implements IAnimation {
     particlesMaxSpeed = 4;
     particlesMinSize = 1;
     particlesMaxSize = 5;
-    x =0;
-    y =0;
+    x = 0;
+    y = 0;
     width = 0;
     height = 0;
-    type = 'particula';
-    constructor(private context: any, x: number,  y: number,private animation: Animation) {
+    constructor(private context: CanvasRenderingContext2D, x: number, y: number, private animation: Animation) {
         this.x = x;
         this.y = y;
         this.xv = randInt(this.particlesMinSpeed, this.particlesMaxSpeed, false);
@@ -47,19 +45,19 @@ class Particle implements IAnimation {
     }
 
     draw() {
-            if (this.size < 0) {
-                this.animation.removeSprinte(this);
-                return;
-            }
-            const ctx = this.context;
+        if (this.size < 0) {
+            this.animation.removeSprinte(this);
+            return;
+        }
+        const ctx = this.context;
 
-            this.context.save();
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, Math.PI * 2, 0, false);
-            ctx.closePath();
-            ctx.fillStyle = 'rgb(' + this.r + ',' + this.g + ',' + this.b + ')';
-            ctx.fill();
-            this.context.restore();
+        this.context.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, Math.PI * 2, 0, false);
+        ctx.closePath();
+        ctx.fillStyle = 'rgb(' + this.r + ',' + this.g + ',' + this.b + ')';
+        ctx.fill();
+        this.context.restore();
     }
 
     update() {
@@ -70,14 +68,14 @@ class Particle implements IAnimation {
     }
 
     conflite(conflitent: IAnimation) {
-        
+
     }
 }
 
 export default class Explosion {
 
     particlesPerExplosion = 15;
-    constructor(private context: any, private x: number, private y: number, private animation: Animation) {
+    constructor(private context: CanvasRenderingContext2D, private x: number, private y: number, private animation: Animation) {
         this.explosion();
     }
 
@@ -88,7 +86,5 @@ export default class Explosion {
             )
         }
     }
-
-
-
 }
+

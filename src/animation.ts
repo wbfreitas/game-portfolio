@@ -1,17 +1,19 @@
-import Imagens from './imagens';
-import IAnimation from './IAnimation';
+import Imagens from './structure/imagens';
+import IAnimation from './structure/IAnimation';
+import {Particle} from './entity/explosion';
 
 class Animation {
-    sprintes: Array<any> = [];
+    sprintes: Array<IAnimation> = [];
     isEnable: boolean = true;
     images = new Imagens();
-    constructor(private context: any, private canvas: any) {
+    constructor(private context: CanvasRenderingContext2D, private canvas: HTMLCanvasElement) {
     }
 
     addSprintAndImg(sprinte: IAnimation, imagePahth: string) {
         this.images.addImage(sprinte, imagePahth);
         this.addSprint(sprinte);
     }
+
     removeSprinte(sprinte: IAnimation) {
         const index = this.sprintes.indexOf(sprinte);
         this.sprintes.splice(index, 1);
@@ -55,9 +57,9 @@ class Animation {
     }
 
     managerConflictors() {
-        this.sprintes.forEach((a :IAnimation) => {
-            this.sprintes.forEach((b :IAnimation) => {
-                if (a != b && this.bum(a, b) && a.type != 'particula' && b.type != 'particula') {
+        this.sprintes.forEach((a: IAnimation) => {
+            this.sprintes.forEach((b: IAnimation) => {
+                if (a != b && this.bum(a, b) && !(a instanceof Particle) && !(b instanceof Particle)) {
                     a.conflite(b);
                     b.conflite(a);
                 }
@@ -65,4 +67,5 @@ class Animation {
         });
     }
 }
+
 export default Animation;

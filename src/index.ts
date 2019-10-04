@@ -1,14 +1,13 @@
 import Animation from './animation';
-import Interaction from './interaction';
-import Skill from './skills';
-import Ship from './ship';
+import Interaction from './entity/interaction';
+import Skill from './entity/skills';
+import Ship from './entity/ship';
 
-function resizeCanvas() {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const canvas :any  = document.getElementById('canvas_sonic');
-  canvas.setAttribute('width', w);
-  canvas.setAttribute('height', h);
+function resizeCanvas(canvas: HTMLCanvasElement) {
+  const w: number = window.innerWidth;
+  const h: number = window.innerHeight;
+  canvas.setAttribute('width', w.toString());
+  canvas.setAttribute('height', h.toString());
 }
 
 const skills = [
@@ -27,9 +26,9 @@ const skills = [
 
 
 (function() {
-      resizeCanvas();
-      const canvas :any  = document.getElementById('canvas_sonic');
-      const context :any = canvas.getContext('2d');
+      const canvas = document.getElementById('canvas_sonic') as HTMLCanvasElement;
+      resizeCanvas(canvas);
+      const context: CanvasRenderingContext2D  = canvas.getContext('2d');
 
       const animation = new Animation(context, canvas);
       const interaction = new Interaction(document);
@@ -37,7 +36,7 @@ const skills = [
 
        animation.addSprintAndImg(ship, 'nave.png');
 
-       skills.forEach(skill => {
+       skills.forEach(skill  => {
         const s =  new Skill(context, interaction, animation);
         animation.addSprintAndImg(s, skill.imagePath);
        });
