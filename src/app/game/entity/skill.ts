@@ -53,7 +53,6 @@ export default class Skill extends Sprinte implements IAnimation {
     }
 
     draw() {
-
         this.context.save();
         this.context.translate(this.x, this.y);
         this.context.rotate(this.rotate / 180 / Math.PI);
