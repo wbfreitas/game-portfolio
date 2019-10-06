@@ -11,7 +11,7 @@ export default class Shot implements IAnimation {
   x = 0;
   y = 0;
   diraction: number;
-  speed = 3;
+  speed = 6;
   constructor(private context: any, private ship: Ship, private animation: Animation) {
     this.x = ship.x;
     this.y = ship.y;

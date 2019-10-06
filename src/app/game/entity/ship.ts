@@ -31,6 +31,8 @@ export default class Ship extends Sprinte implements IAnimation {
     }
 
     StartPosition() {
+        this.diraction = DIRACTION.UP;
+        this.rotate = 0;
         this.x = (this.context.canvas.width / 2) - this.width;
         this.y = (this.context.canvas.height / 2) - this.height;
         this.timeInumme = 0;
