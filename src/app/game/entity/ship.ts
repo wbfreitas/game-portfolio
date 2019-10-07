@@ -96,8 +96,10 @@ export default class Ship extends Sprinte implements IAnimation {
     conflite(conflitent: IAnimation) {
         if (this.imunne)
             return false;
+
         new Explosion(this.context, this.x, this.y, this.animation);
         this.StartPosition();
+        this.animation.config.life--;
     }
 
     flashing() {

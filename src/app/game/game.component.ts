@@ -12,6 +12,7 @@ const skills = [
   { imagePath: 'assets/imgs/github.png' }
 ];
 
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -23,6 +24,12 @@ export class GameComponent implements OnInit {
   canvas: ElementRef<HTMLCanvasElement>;
   @ViewChild('barStatus', { static: true })
   statusBar: ElementRef<HTMLCanvasElement>;
+
+  config = {
+    level: 1,
+    life: 3,
+    score: 0
+  };
   constructor() { }
 
   resizeCanvas() {
@@ -33,20 +40,24 @@ export class GameComponent implements OnInit {
     this.canvas.nativeElement.setAttribute('height', h.toString());
   }
 
+  rangeArray(n: number): any[] {
+    return Array(n);
+  }
+
   ngOnInit() {
     this.resizeCanvas();
     const context: CanvasRenderingContext2D = this.canvas.nativeElement.getContext('2d');
 
-    const animation = new Animation(context, this.canvas.nativeElement);
+    const animation = new Animation(context, this.config);
     const interaction = new Interaction(document);
     const ship = new Ship(context, interaction, animation);
-
     animation.addSprintAndImg(ship, 'assets/imgs/nave.png');
 
     skills.forEach(skill => {
       const s = new Skill(context, interaction, animation);
       animation.addSprintAndImg(s, skill.imagePath);
     });
+
 
     animation.images.load(() => {
       animation.enable();

@@ -45,6 +45,7 @@ export default class Skill extends Sprinte implements IAnimation {
         if (conflitent instanceof Shot) {
             new Explosion(this.context, this.x, this.y, this.animation);
             this.animation.removeSprinte(this);
+            this.animation.config.score += 10;
         } else if (conflitent instanceof Skill) {
             this.changeDiraction();
             this.x += this.speedX;

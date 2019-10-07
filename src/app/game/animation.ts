@@ -6,7 +6,7 @@ class Animation {
     sprintes: Array<IAnimation> = [];
     isEnable: boolean = false;
     images = new Imagens();
-    constructor(private context: CanvasRenderingContext2D, private canvas: HTMLCanvasElement) {
+    constructor(private context: CanvasRenderingContext2D, public config: any) {
     }
 
     addSprintAndImg(sprinte: IAnimation, imagePahth: string) {
@@ -32,7 +32,7 @@ class Animation {
     }
 
     cleanScreen() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     }
 
     nextFrame() {
