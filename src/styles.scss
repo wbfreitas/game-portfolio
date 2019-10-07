@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+    font-family: '8-bit';
+    src: url('./assets/fonts/8-BIT.ttf');
+}
+
 body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: '8-bit';
 }
