@@ -3,7 +3,7 @@ import GameConfig from 'src/app/model/games/constants/game-config';
 import Skill from 'src/app/model/games/skill';
 import Ship from 'src/app/model/games/ship';
 import Interaction from 'src/app/model/games/interaction';
-import Animation from 'src/app/components/game/animation';
+import Animation from './animation';
 import IAnimation from '../../model/games/structure/IAnimation';
 
 @Injectable({
@@ -32,7 +32,6 @@ export class GameConfigService {
 
     this.imgs.forEach((img, i)  =>
       img.onload = () => {
-        console.log(i);
       if(i == this.imgs.length -1 ) {
         this.config.isEnabled = true; 
         animation.nextFrame();

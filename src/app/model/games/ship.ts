@@ -1,7 +1,6 @@
 import Sprinte from '../../components/game/sprinte';
 import Interaction from './interaction';
 import IAnimation from './structure/IAnimation';
-import Animation from '../../components/game/animation';
 import Explosion from './explosion';
 import Shot from './shot';
 import { DIRACTION } from './structure/diraction';
