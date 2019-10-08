@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameComponent } from './game/game.component';
+import { GameComponent } from './components/game/game.component';
+import { GameConfigService } from './services/game/game-config.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { GameComponent } from './game/game.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [GameConfigService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

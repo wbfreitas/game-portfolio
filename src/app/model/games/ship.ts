@@ -1,10 +1,10 @@
-import Sprinte from '../sprinte';
+import Sprinte from '../../components/game/sprinte';
 import Interaction from './interaction';
-import IAnimation from '../structure/IAnimation';
-import Animation from '../animation';
+import IAnimation from './structure/IAnimation';
 import Explosion from './explosion';
 import Shot from './shot';
-import { DIRACTION } from '../structure/diraction';
+import { DIRACTION } from './structure/diraction';
+import { GameConfigService } from 'src/app/services/game/game-config.service';
 
 export default class Ship extends Sprinte implements IAnimation {
 
@@ -17,7 +17,7 @@ export default class Ship extends Sprinte implements IAnimation {
     height = 40;
     imunne = true;
     timeInumme = 0;
-    constructor(context: any, private interations: Interaction, private animation: Animation) {
+    constructor(context: any, private interations: Interaction, private gameConfig: GameConfigService) {
         super(context, 1, 1);
         this.interval = 60;
         this.x = 200;
@@ -53,9 +53,9 @@ export default class Ship extends Sprinte implements IAnimation {
 
     addShot() {
         if (this.interations.keyPressed(DIRACTION.SPACE) && !this.shoting) {
-            const shot = new Shot(this.context, this, this.animation);
+            const shot = new Shot(this.context, this, this.gameConfig);
             shot.draw();
-            this.animation.sprintes.push(shot);
+            this.gameConfig.config.frames.push(shot);
             this.shoting = true;
         } else if (!this.interations.keyPressed(DIRACTION.SPACE)) {
             this.shoting = false;
@@ -96,8 +96,10 @@ export default class Ship extends Sprinte implements IAnimation {
     conflite(conflitent: IAnimation) {
         if (this.imunne)
             return false;
-        new Explosion(this.context, this.x, this.y, this.animation);
+
+        new Explosion(this.context, this.x, this.y, this.gameConfig);
         this.StartPosition();
+        this.gameConfig.removeLife();
     }
 
     flashing() {

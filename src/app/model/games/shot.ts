@@ -1,7 +1,7 @@
-import IAnimation from '../structure/ianimation';
-import Animation from '../animation';
+import IAnimation from './structure/ianimation';
 import Ship from './ship';
-import { DIRACTION } from '../structure/diraction';
+import { DIRACTION } from './structure/diraction';
+import { GameConfigService } from 'src/app/services/game/game-config.service';
 
 export default class Shot implements IAnimation {
   color = 'yellow';
@@ -12,17 +12,18 @@ export default class Shot implements IAnimation {
   y = 0;
   diraction: number;
   speed = 6;
-  constructor(private context: any, private ship: Ship, private animation: Animation) {
+  constructor(private context: any, private ship: Ship, private gameConfig: GameConfigService) {
     this.x = ship.x;
     this.y = ship.y;
     this.diraction = ship.diraction;
+    this.gameConfig.newSong(this.gameConfig.config.songs.shot).play();
     this.updateStart();
   }
 
   destroy() {
     if (this.y <= 0 || this.y > this.context.canvas.height
       || this.x <= 0 || this.x >= this.context.canvas.width)
-      this.animation.removeSprinte(this);
+      this.gameConfig.removeSprinte(this);
   }
 
   updateStart() {
@@ -46,8 +47,8 @@ export default class Shot implements IAnimation {
   update() {
     switch (this.diraction) {
       case DIRACTION.UP:
-         this.y -= this.speed;
-          break;
+        this.y -= this.speed;
+        break;
       case DIRACTION.DOWN:
         this.y += this.speed;
         break;
@@ -62,7 +63,7 @@ export default class Shot implements IAnimation {
   }
 
   conflite(conflitent: IAnimation) {
-    this.animation.removeSprinte(this);
+    this.gameConfig.removeSprinte(this);
   }
 
   draw() {
