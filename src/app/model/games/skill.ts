@@ -6,20 +6,26 @@ import Shot from './shot';
 import { GameConfigService } from 'src/app/services/game/game-config.service';
 
 export default class Skill extends Sprinte implements IAnimation {
-    speedX: number = 0.2;
-    speedY: number = 0.2;
-    rotate = 0;
+    private speed: number = 0.2;
+    private speedX: number = 0.2;
+    private speedY: number = 0.2;
+    private rotate = 0;
     width = 30;
     height = 30;
-    rotateSpeed = 2;
+    private rotateSpeed = 2;
     constructor(context: any, private interations: Interaction, private gameConfig: GameConfigService) {
         super(context, 1, 1);
         this.interval = 60;
-        this.x = Math.floor(Math.random() * this.context.canvas.width) + 1;;
-        this.y = Math.floor(Math.random() * this.context.canvas.height) + 1;;
+        this.nextLevel();
+        this.positionRandom();
         if (Math.floor(Math.random() * (2))) {
             this.changeDiraction();
         }
+    }
+
+    positionRandom() {
+        this.x = Math.floor(Math.random() * this.context.canvas.width) + 1;;
+        this.y = Math.floor(Math.random() * this.context.canvas.height) + 1;;
     }
 
     changeDiraction() {
@@ -38,14 +44,20 @@ export default class Skill extends Sprinte implements IAnimation {
 
         this.x += this.speedX;
         this.y += this.speedY;
+    }
 
+    nextLevel() {
+        this.gameConfig.getLevel().subscribe(level => {
+            this.speedY = this.speed * level;
+            this.speedX = this.speed * level;
+            this.positionRandom();
+        });
     }
 
     conflite(conflitent: IAnimation) {
         if (conflitent instanceof Shot) {
             new Explosion(this.context, this.x, this.y, this.gameConfig);
-            this.gameConfig.removeSprinte(this);
-            this.gameConfig.config.score += 10;
+            this.gameConfig.removeEnemy(this);
         } else if (conflitent instanceof Skill) {
             this.changeDiraction();
             this.x += this.speedX;
