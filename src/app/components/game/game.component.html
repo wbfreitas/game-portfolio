@@ -1,0 +1,10 @@
+<nav #barStatus>
+    <ul>
+        <li class="lifes" *ngFor="let i of rangeArray(this.gameConfig.config.life)">
+            <img src="assets/imgs/nave.png">
+        </li>
+    </ul>
+    <span>score {{this.gameConfig.config.score}}</span>
+    <span>LV {{this.gameConfig.config.level}}</span>
+</nav>
+<canvas #canvas width="" height=""></canvas>

@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import Animation from './animation';
-import Interaction from './entity/interaction';
-import Skill from './entity/skill';
-import Ship from './entity/ship';
+import { GameConfigService } from 'src/app/services/game/game-config.service';
 
 
 
@@ -24,13 +21,7 @@ export class GameComponent implements OnInit {
   canvas: ElementRef<HTMLCanvasElement>;
   @ViewChild('barStatus', { static: true })
   statusBar: ElementRef<HTMLCanvasElement>;
-
-  config = {
-    level: 1,
-    life: 3,
-    score: 0
-  };
-  constructor() { }
+  constructor(public gameConfig: GameConfigService) { }
 
   resizeCanvas() {
     const statusBarHeight = this.statusBar.nativeElement.offsetHeight;
@@ -46,22 +37,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.resizeCanvas();
-    const context: CanvasRenderingContext2D = this.canvas.nativeElement.getContext('2d');
-
-    const animation = new Animation(context, this.config);
-    const interaction = new Interaction(document);
-    const ship = new Ship(context, interaction, animation);
-    animation.addSprintAndImg(ship, 'assets/imgs/nave.png');
-
-    skills.forEach(skill => {
-      const s = new Skill(context, interaction, animation);
-      animation.addSprintAndImg(s, skill.imagePath);
-    });
-
-
-    animation.images.load(() => {
-      animation.enable();
-      animation.nextFrame();
-    });
+    this.gameConfig.setup(this.canvas.nativeElement);
   }
 }

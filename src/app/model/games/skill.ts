@@ -1,9 +1,9 @@
-import Sprinte from '../sprinte';
+import Sprinte from '../../components/game/sprinte';
 import Interaction from './interaction';
-import IAnimation from '../structure/ianimation';
-import Animation from '../animation';
+import IAnimation from './structure/ianimation';
 import Explosion from './explosion';
 import Shot from './shot';
+import { GameConfigService } from 'src/app/services/game/game-config.service';
 
 export default class Skill extends Sprinte implements IAnimation {
     speedX: number = 0.2;
@@ -12,7 +12,7 @@ export default class Skill extends Sprinte implements IAnimation {
     width = 30;
     height = 30;
     rotateSpeed = 2;
-    constructor(context: any, private interations: Interaction, private animation: Animation) {
+    constructor(context: any, private interations: Interaction, private gameConfig: GameConfigService) {
         super(context, 1, 1);
         this.interval = 60;
         this.x = Math.floor(Math.random() * this.context.canvas.width) + 1;;
@@ -43,9 +43,9 @@ export default class Skill extends Sprinte implements IAnimation {
 
     conflite(conflitent: IAnimation) {
         if (conflitent instanceof Shot) {
-            new Explosion(this.context, this.x, this.y, this.animation);
-            this.animation.removeSprinte(this);
-            this.animation.config.score += 10;
+            new Explosion(this.context, this.x, this.y, this.gameConfig);
+            this.gameConfig.removeSprinte(this);
+            this.gameConfig.config.score += 10;
         } else if (conflitent instanceof Skill) {
             this.changeDiraction();
             this.x += this.speedX;
