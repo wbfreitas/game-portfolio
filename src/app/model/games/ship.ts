@@ -99,7 +99,7 @@ export default class Ship extends Sprinte implements IAnimation {
 
         new Explosion(this.context, this.x, this.y, this.gameConfig);
         this.StartPosition();
-        this.gameConfig.config.life--;
+        this.gameConfig.removeLife();
     }
 
     flashing() {

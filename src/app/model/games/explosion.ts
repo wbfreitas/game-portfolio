@@ -80,6 +80,7 @@ export default class Explosion {
     }
 
     explosion() {
+        this.gameConfig.newSong(this.gameConfig.config.songs.explosion).play();
         for (let i = 0; i < this.particlesPerExplosion; i++) {
             this.gameConfig.config.frames.push(
                 new Particle(this.context, this.x, this.y, this.gameConfig)

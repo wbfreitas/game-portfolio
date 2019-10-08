@@ -6,16 +6,19 @@ import Interaction from 'src/app/model/games/interaction';
 import Animation from './animation';
 import IAnimation from '../../model/games/structure/IAnimation';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class GameConfigService {
 
-  config: GameConfig = new GameConfig();
+  level = 1;
   imgs = [];
-  skills = [];
+  frames = [];
+  config: GameConfig = new GameConfig(this.level);
+
   constructor() {
-  } 
+  }
 
   setup(canvas: HTMLCanvasElement) {
 
@@ -30,14 +33,31 @@ export class GameConfigService {
       this.addSprintAndImg(s, skill.imagePath);
     });
 
-    this.imgs.forEach((img, i)  =>
+    Object.keys(this.config.songs)
+          .forEach(song => this.newSong(this.config.songs[song]));
+
+    this.imgs.forEach((img, i) =>
       img.onload = () => {
-      if(i == this.imgs.length -1 ) {
-        this.config.isEnabled = true; 
-        animation.nextFrame();
-      }
-    });
-    
+        if (i == this.imgs.length - 1) {
+          this.config.isEnabled = true;
+          animation.nextFrame();
+        }
+      });
+      this.start();
+  }
+
+  start() {
+    this.level = 0;
+    this.config = new GameConfig(this.level);
+    this.config.frames.push(...this.frames);
+  }
+
+  newSong(path :string) {
+    const song = new Audio();
+    song.src = path;
+    song.volume = 0.2;
+    song.load();
+    return song;
   }
 
   addSprintAndImg(sprinte: IAnimation, imagePahth: string) {
@@ -50,8 +70,15 @@ export class GameConfigService {
     this.config.frames.splice(index, 1);
   }
 
+  removeLife() {
+    if(this.config.life > 0)
+      this.config.life--;
+     else
+      this.start();
+  }
+
   addSprint(frame: IAnimation) {
-    this.config.frames.push(frame);
+    this.frames.push(frame);
   }
 
   addImage(iAnimation: any, path: string) {
