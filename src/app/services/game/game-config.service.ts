@@ -5,6 +5,7 @@ import Ship from 'src/app/model/games/ship';
 import Interaction from 'src/app/model/games/interaction';
 import Animation from './animation';
 import IAnimation from '../../model/games/structure/IAnimation';
+import { Observable, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -12,11 +13,12 @@ import IAnimation from '../../model/games/structure/IAnimation';
 })
 export class GameConfigService {
 
-  level = 1;
+  private level = 1;
   imgs = [];
   frames = [];
   config: GameConfig = new GameConfig(this.level);
-
+  enemies = this.config.skills.length;
+  private levelO = new Subject<any>();
   constructor() {
   }
 
@@ -34,7 +36,7 @@ export class GameConfigService {
     });
 
     Object.keys(this.config.songs)
-          .forEach(song => this.newSong(this.config.songs[song]));
+      .forEach(song => this.newSong(this.config.songs[song]));
 
     this.imgs.forEach((img, i) =>
       img.onload = () => {
@@ -43,16 +45,27 @@ export class GameConfigService {
           animation.nextFrame();
         }
       });
-      this.start();
+    this.update();
   }
 
-  start() {
-    this.level = 0;
+  update() {
+    this.config.frames = this.frames.slice(0);
+  }
+
+  restart() {
     this.config = new GameConfig(this.level);
-    this.config.frames.push(...this.frames);
+    this.update();
   }
 
-  newSong(path :string) {
+  nextLevel() {
+    this.level++;
+    this.levelO.next(this.level);
+    console.log('aqui');
+    this.update();
+  }
+
+
+  newSong(path: string) {
     const song = new Audio();
     song.src = path;
     song.volume = 0.2;
@@ -68,13 +81,24 @@ export class GameConfigService {
   removeSprinte(frame: IAnimation) {
     const index = this.config.frames.indexOf(frame);
     this.config.frames.splice(index, 1);
+    if ((this.config.frames.length - 1) < 1) {
+      this.nextLevel();
+    }
+  }
+
+  removeEnemy(frame: IAnimation) {
+    this.removeSprinte(frame);
+    this.enemies--
+    this.config.score += 10;
   }
 
   removeLife() {
-    if(this.config.life > 0)
+    if (this.config.life > 0)
       this.config.life--;
-     else
-      this.start();
+    else {
+      this.level = 0;
+      this.restart();
+    }
   }
 
   addSprint(frame: IAnimation) {
@@ -86,5 +110,9 @@ export class GameConfigService {
     image.src = path;
     this.imgs.push(image);
     iAnimation.setImage(image);
+  }
+
+  getLevel(): Observable<any> {
+    return this.levelO.asObservable();
   }
 }
