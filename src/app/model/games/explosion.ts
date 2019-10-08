@@ -1,5 +1,5 @@
-import IAnimation from '../structure/ianimation';
-import Animation from '../animation';
+import IAnimation from './structure/ianimation';
+import { GameConfigService } from 'src/app/services/game/game-config.service';
 
 function randInt(min: number, max: number, positive: boolean) {
 
@@ -33,7 +33,7 @@ export class Particle implements IAnimation {
     y = 0;
     width = 0;
     height = 0;
-    constructor(private context: CanvasRenderingContext2D, x: number, y: number, private animation: Animation) {
+    constructor(private context: CanvasRenderingContext2D, x: number, y: number, private gameConfig: GameConfigService) {
         this.x = x;
         this.y = y;
         this.xv = randInt(this.particlesMinSpeed, this.particlesMaxSpeed, false);
@@ -46,7 +46,7 @@ export class Particle implements IAnimation {
 
     draw() {
         if (this.size < 0) {
-            this.animation.removeSprinte(this);
+            this.gameConfig.removeSprinte(this);
             return;
         }
         const ctx = this.context;
@@ -75,14 +75,14 @@ export class Particle implements IAnimation {
 export default class Explosion {
 
     particlesPerExplosion = 15;
-    constructor(private context: CanvasRenderingContext2D, private x: number, private y: number, private animation: Animation) {
+    constructor(private context: CanvasRenderingContext2D, private x: number, private y: number, private gameConfig :GameConfigService) {
         this.explosion();
     }
 
     explosion() {
         for (let i = 0; i < this.particlesPerExplosion; i++) {
-            this.animation.sprintes.push(
-                new Particle(this.context, this.x, this.y, this.animation)
+            this.gameConfig.config.frames.push(
+                new Particle(this.context, this.x, this.y, this.gameConfig)
             )
         }
     }

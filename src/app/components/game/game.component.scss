@@ -1,0 +1,25 @@
+canvas {
+    background: radial-gradient(circle at bottom, navy 0, black 100%);
+}
+
+nav {
+    background: #000;
+    color: #fff;
+    padding: 18px;
+    padding-right: 0;
+    font-size: 12px;
+    border: 1px solid #fff;
+    text-align: right;
+    .lifes {
+        display: inline-block;
+        margin-right: 5px;
+        img {
+            height: 20px;
+        }
+    }
+    ul,
+    span {
+        display: inline-block;
+        margin-right: 20px;
+    }
+}
