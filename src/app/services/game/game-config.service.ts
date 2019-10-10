@@ -14,68 +14,85 @@ import { Observable, Subject } from 'rxjs';
 export class GameConfigService {
 
   private level = 1;
-  imgs = [];
-  frames = [];
+  private imgs = [];
+  private frames = [];
+  private skills = [];
   config: GameConfig = new GameConfig(this.level);
-  enemies = this.config.skills.length;
+  private ship: Ship;
   private levelO = new Subject<any>();
+  private progress = new Subject<any>();
+  private animation: Animation;
   constructor() {
   }
 
   setup(canvas: HTMLCanvasElement) {
 
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
-    const animation = new Animation(context, this);
+    this.animation = new Animation(context, this);
     const interaction = new Interaction(document);
-    const ship = new Ship(context, interaction, this);
-    this.addSprintAndImg(ship, this.config.ship.imagePath);
+    this.ship = new Ship(context, interaction, this);
+    this.addImage(this.ship, this.config.ship.imagePath);
 
     this.config.skills.forEach(skill => {
       const s = new Skill(context, interaction, this);
-      this.addSprintAndImg(s, skill.imagePath);
+      this.skills.push(s);
+      this.addImage(s, skill.imagePath);
     });
 
-    Object.keys(this.config.songs)
-      .forEach(song => this.newSong(this.config.songs[song]));
-
-    this.imgs.forEach((img, i) =>
-      img.onload = () => {
-        if (i == this.imgs.length - 1) {
-          this.config.isEnabled = true;
-          animation.nextFrame();
-        }
-      });
+    this.loading();
     this.update();
   }
 
-  update() {
-    this.config.frames = this.frames.slice(0);
+  private update() {
+    this.config.frames = [this.ship, ...this.skills.slice(0)];
   }
 
-  restart() {
+  private restart() {
     this.config = new GameConfig(this.level);
     this.update();
   }
 
-  nextLevel() {
+  private nextLevel() {
     this.level++;
     this.levelO.next(this.level);
-    console.log('aqui');
     this.update();
   }
 
 
-  newSong(path: string) {
-    const song = new Audio();
-    song.src = path;
-    song.volume = 0.2;
-    song.load();
-    return song;
+  private addImage(iAnimation: any, path: string) {
+    const image = new Image();
+    image.src = path;
+    this.imgs.push(image);
+    iAnimation.setImage(image);
   }
 
-  addSprintAndImg(sprinte: IAnimation, imagePahth: string) {
-    this.addImage(sprinte, imagePahth);
-    this.addSprint(sprinte);
+  private setProgress(progress: number, total: number) {
+    setTimeout(() => {
+      const porcent = progress / total * 100;
+      this.progress.next(porcent);
+        if (progress == total) {
+          this.config.isEnabled = true;
+          this.animation.nextFrame();
+        }
+    }, 1000);
+  }
+
+
+  private loading() {
+    const total = this.imgs.length + Object.keys(this.config.songs).length;
+    let loading = 1;
+
+    this.imgs.forEach((img, i) =>
+      img.onload = () => {
+        this.setProgress(loading++, total);
+      });
+
+    Object.keys(this.config.songs)
+      .forEach(song => {
+        this.newSong(this.config.songs[song]);
+        this.setProgress(loading++, total);
+      });
+
   }
 
   removeSprinte(frame: IAnimation) {
@@ -86,9 +103,16 @@ export class GameConfigService {
     }
   }
 
+  newSong(path: string) {
+    const song = new Audio();
+    song.src = path;
+    song.volume = 0.2;
+    song.load();
+    return song;
+  }
+
   removeEnemy(frame: IAnimation) {
     this.removeSprinte(frame);
-    this.enemies--
     this.config.score += 10;
   }
 
@@ -105,14 +129,12 @@ export class GameConfigService {
     this.frames.push(frame);
   }
 
-  addImage(iAnimation: any, path: string) {
-    const image = new Image();
-    image.src = path;
-    this.imgs.push(image);
-    iAnimation.setImage(image);
+  getProgress(): Observable<any> {
+    return this.progress.asObservable();
   }
 
   getLevel(): Observable<any> {
     return this.levelO.asObservable();
   }
+
 }
