@@ -13,7 +13,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class GameConfigService {
 
-  private level = 1;
+  private level = 0;
   private imgs = [];
   private frames = [];
   private skills = [];
@@ -22,6 +22,7 @@ export class GameConfigService {
   private levelO = new Subject<any>();
   private progress = new Subject<any>();
   private animation: Animation;
+  showNextLevel = false;
   constructor() {
   }
 
@@ -40,7 +41,6 @@ export class GameConfigService {
     });
 
     this.loading();
-    this.update();
   }
 
   private update() {
@@ -53,9 +53,15 @@ export class GameConfigService {
   }
 
   private nextLevel() {
+    this.showNextLevel = true;
+    this.config.isEnabled = false;
     this.level++;
     this.levelO.next(this.level);
     this.update();
+    setTimeout(() => {
+      this.showNextLevel = false;
+      this.config.isEnabled = true;
+    }, 1000);
   }
 
 
@@ -71,7 +77,7 @@ export class GameConfigService {
       const porcent = progress / total * 100;
       this.progress.next(porcent);
         if (progress == total) {
-          this.config.isEnabled = true;
+          this.nextLevel();
           this.animation.nextFrame();
         }
     }, 1000);

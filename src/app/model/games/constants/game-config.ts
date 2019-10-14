@@ -2,7 +2,7 @@ import IAnimation from '../structure/IAnimation';
 
 export default class GameConfig {
     life = 3;
-    isEnabled = true;
+    isEnabled = false;
     frames: Array<IAnimation> = [];
     skills = [
         { imagePath: 'assets/imgs/java.png' },

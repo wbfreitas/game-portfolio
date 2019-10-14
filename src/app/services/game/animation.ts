@@ -1,5 +1,5 @@
 import IAnimation from '../../model/games/structure/IAnimation';
-import {Particle} from '../../model/games/explosion';
+import { Particle } from '../../model/games/explosion';
 import { GameConfigService } from 'src/app/services/game/game-config.service';
 
 class Animation {
@@ -11,17 +11,18 @@ class Animation {
     }
 
     nextFrame() {
-        if (!this.gameConfig.config.isEnabled) return;
+        if (this.gameConfig.config.isEnabled) {
 
-        this.cleanScreen();
-        this.gameConfig.config.frames.forEach(frame => {
-            frame.update();
-        });
-        this.gameConfig.config.frames.forEach(frame => {
-            frame.draw();
-        });
-        this.managerConflictors();
-        requestAnimationFrame(() => this.nextFrame());
+            this.cleanScreen();
+            this.gameConfig.config.frames.forEach(frame => {
+                frame.update();
+            });
+            this.gameConfig.config.frames.forEach(frame => {
+                frame.draw();
+            });
+            this.managerConflictors();
+        }
+       requestAnimationFrame(() => this.nextFrame());
     }
 
     bum(a: IAnimation, b: IAnimation) {
