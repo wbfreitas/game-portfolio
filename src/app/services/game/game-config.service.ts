@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router }  from '@angular/router';
 import GameConfig from 'src/app/model/games/constants/game-config';
 import Skill from 'src/app/model/games/skill';
 import Ship from 'src/app/model/games/ship';
@@ -23,7 +24,7 @@ export class GameConfigService {
   private progress = new Subject<any>();
   private animation: Animation;
   showNextLevel = false;
-  constructor() {
+  constructor(private router: Router) {
   }
 
   setup(canvas: HTMLCanvasElement) {
@@ -58,6 +59,7 @@ export class GameConfigService {
     this.level++;
     this.levelO.next(this.level);
     this.update();
+    this.router.navigate(['next-level'], { skipLocationChange: true });
     setTimeout(() => {
       this.showNextLevel = false;
       this.config.isEnabled = true;
@@ -101,18 +103,26 @@ export class GameConfigService {
 
   }
 
+  private gameOver() {
+    this.level = 0;
+    this.restart();
+    this.router.navigate(['game-over'], { skipLocationChange: true });
+  }
+
   removeSprinte(frame: IAnimation) {
     const index = this.config.frames.indexOf(frame);
     this.config.frames.splice(index, 1);
     if ((this.config.frames.length - 1) < 1) {
       this.nextLevel();
-    }
+    } 
+
   }
 
   newSong(path: string) {
     const song = new Audio();
     song.src = path;
-    song.volume = 0.2;
+    // song.volume = 0.2;
+    song.volume = 0;
     song.load();
     return song;
   }
@@ -126,8 +136,7 @@ export class GameConfigService {
     if (this.config.life > 0)
       this.config.life--;
     else {
-      this.level = 0;
-      this.restart();
+      this.gameOver();
     }
   }
 

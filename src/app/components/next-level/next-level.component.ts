@@ -8,7 +8,7 @@ import { GameConfigService } from 'src/app/services/game/game-config.service';
 })
 export class NextLevelComponent implements OnInit {
 
-  level: number;
+  level = 1;
   constructor(public gameConfig: GameConfigService) { }
 
   ngOnInit() {
