@@ -20,9 +20,8 @@ export default class Ship extends Sprinte implements IAnimation {
     constructor(context: any, private interations: Interaction, private gameConfig: GameConfigService) {
         super(context, 1, 1);
         this.interval = 60;
-        this.x = 200;
-        this.y = context.canvas.height - 40;
-        this.StartPosition();
+        this.startPosition();
+        this.nextLevel();
     }
 
     verifyDiraction(diraction: number) {
@@ -30,7 +29,8 @@ export default class Ship extends Sprinte implements IAnimation {
             !this.interations.keyPressed(DIRACTION.SPACE);
     }
 
-    StartPosition() {
+    startPosition() {
+        this.timeInumme = 0;
         this.diraction = DIRACTION.UP;
         this.rotate = 0;
         this.x = (this.context.canvas.width / 2) - this.width;
@@ -98,8 +98,8 @@ export default class Ship extends Sprinte implements IAnimation {
             return false;
 
         new Explosion(this.context, this.x, this.y, this.gameConfig);
-        this.StartPosition();
-        this.gameConfig.config.life--;
+        this.startPosition();
+        this.gameConfig.removeLife();
     }
 
     flashing() {
@@ -121,5 +121,11 @@ export default class Ship extends Sprinte implements IAnimation {
         this.crossScreen();
         this.context.drawImage(this.image, -15, -15, this.width, this.height);
         this.context.restore();
+    }
+
+    nextLevel() {
+        this.gameConfig.getLevel().subscribe(() => {
+            this.startPosition();
+        });
     }
 }

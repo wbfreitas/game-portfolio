@@ -1,0 +1,26 @@
+.page-next-level {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    p.text {
+        font-size: 2em;
+        color: #fff;
+        width: 40%;
+        text-align: center;
+        z-index: 2;
+        line-height: 1.5em;
+    }
+    .mask {
+        opacity: 0.5;
+        background: #000;
+        top: 0;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+    }
+}
