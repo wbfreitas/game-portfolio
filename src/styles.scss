@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import './css/reset.css';
+@import './assets/style.css';
 @font-face {
     font-family: '8-bit';
     src: url('./assets/fonts/8-BIT.ttf');
@@ -11,4 +12,5 @@ body {
     padding: 0;
     overflow: hidden;
     font-family: '8-bit';
+    background: radial-gradient(circle at bottom, navy 0, black 100%);
 }

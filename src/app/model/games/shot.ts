@@ -16,6 +16,7 @@ export default class Shot implements IAnimation {
     this.x = ship.x;
     this.y = ship.y;
     this.diraction = ship.diraction;
+    this.gameConfig.newSong(this.gameConfig.config.songs.shot).play();
     this.updateStart();
   }
 
@@ -46,8 +47,8 @@ export default class Shot implements IAnimation {
   update() {
     switch (this.diraction) {
       case DIRACTION.UP:
-         this.y -= this.speed;
-          break;
+        this.y -= this.speed;
+        break;
       case DIRACTION.DOWN:
         this.y += this.speed;
         break;

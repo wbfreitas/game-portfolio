@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GameConfigService } from 'src/app/services/game/game-config.service';
 
-
-
 const skills = [
   { imagePath: 'assets/imgs/java.png' },
   { imagePath: 'assets/imgs/js.png' },
   { imagePath: 'assets/imgs/github.png' }
 ];
-
 
 @Component({
   selector: 'app-game',
