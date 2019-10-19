@@ -7,7 +7,7 @@ import { GameConfigService } from 'src/app/services/game/game-config.service';
   styleUrls: ['./loading.component.scss']
 })
 export class LoadingComponent implements OnInit {
-  private porcent = '0%';
+  porcent = '0%';
   constructor(private gameConfig: GameConfigService) { }
 
   ngOnInit() {
