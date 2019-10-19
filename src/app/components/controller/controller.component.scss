@@ -1,0 +1,22 @@
+$size-controller: 6em;
+$tab-height: 2.5em;
+.controller {
+    background: red;
+    position: absolute;
+    width: $size-controller;
+    height: $size-controller;
+    top: 50%;
+    left: 10%;
+    margin: 0;
+    padding: 0;
+    .tab {
+        width: 100%;
+        height: $tab-height;
+        background: #2b3334;
+        position: absolute;
+        top: calc(50% - ( #{$tab-height} / 2));
+    }
+    .tab-1 {
+        transform: rotate(90deg);
+    }
+}

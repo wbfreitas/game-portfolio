@@ -8,6 +8,7 @@ import { GameConfigService } from './services/game/game-config.service';
 import { LoadingComponent } from './components/loading/loading.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NextLevelComponent } from './components/next-level/next-level.component';
+import { ControllerComponent } from './components/controller/controller.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { NextLevelComponent } from './components/next-level/next-level.component
     GameComponent,
     LoadingComponent,
     HomeComponent,
-    NextLevelComponent
+    NextLevelComponent,
+    ControllerComponent
   ],
   imports: [
     BrowserModule,
