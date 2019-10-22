@@ -1,4 +1,4 @@
-export const DIRACTION :{[index: string]:any}  = {
+export const DIRACTION :{[index: string] :number}  = {
     LEFT: 37,
     UP: 38,
     RIGHT: 39,

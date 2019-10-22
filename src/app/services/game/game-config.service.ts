@@ -3,10 +3,11 @@ import { Router }  from '@angular/router';
 import GameConfig from 'src/app/model/games/constants/game-config';
 import Skill from 'src/app/model/games/skill';
 import Ship from 'src/app/model/games/ship';
-import Interaction from 'src/app/model/games/interaction';
+import Interaction from 'src/app/services/interaction.service';
 import Animation from './animation';
 import IAnimation from '../../model/games/structure/IAnimation';
 import { Observable, Subject } from 'rxjs';
+import InteractionService from 'src/app/services/interaction.service';
 
 
 @Injectable({
@@ -24,21 +25,20 @@ export class GameConfigService {
   private progress = new Subject<any>();
   private animation: Animation;
   showNextLevel = false;
-  constructor(private router: Router) {
+  constructor(private router: Router, public interactions: InteractionService) {
   }
 
   setup(canvas: HTMLCanvasElement) {
 
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     this.animation = new Animation(context, this);
-    const interaction = new Interaction(document);
-    this.ship = new Ship(context, interaction, this);
+    this.ship = new Ship(context, this);
     this.addImage(this.ship, this.config.ship.imagePath);
 
     this.config.skills.forEach(skill => {
-      const s = new Skill(context, interaction, this);
-      this.skills.push(s);
+      const s = new Skill(context, this);
       this.addImage(s, skill.imagePath);
+      this.skills.push(s);
     });
 
     this.loading();
@@ -53,7 +53,7 @@ export class GameConfigService {
     this.update();
   }
 
-  private nextLevel() {
+   nextLevel() {
     this.showNextLevel = true;
     this.config.isEnabled = false;
     this.level++;

@@ -1,8 +1,6 @@
 <section class="page-game-over">
     <div class="center-box">
         <p class="text">Game over</p>
-        <a [routerLink]="['/']" skipLocationChange>
-            <span class="icon-spinner11 icon"></span>
-        </a>
+        <span (click)="reset()" class="icon-spinner11 icon"></span>
     </div>
 </section>

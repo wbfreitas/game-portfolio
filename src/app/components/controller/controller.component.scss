@@ -1,0 +1,65 @@
+$size-controller: 6em;
+$size-button: 2.5em;
+$tab-height: 2.5em;
+$reduce-size-front-tab: 0.5em;
+$button-color: #ff0000;
+.controller-box {
+    display: none;
+    @media only screen and (max-width: 600px) {
+        display: block;
+    }
+}
+
+.controller {
+    position: absolute;
+    width: $size-controller;
+    height: $size-controller;
+    left: 2%;
+    top: calc(98% - 6em);
+    margin: 0;
+    padding: 0;
+    .tab {
+        background: #202020;
+        position: absolute;
+        top: calc(50% - ( #{$tab-height} / 2));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &:not(.shadow) {
+            width: calc(100% - #{$reduce-size-front-tab});
+            left: $reduce-size-front-tab / 2;
+            top: $reduce-size-front-tab * 4;
+            height: $tab-height - $reduce-size-front-tab;
+        }
+    }
+    .tab-2 {
+        transform: rotate(90deg);
+    }
+    .arrow {
+        font-size: 1em;
+        color: #fff;
+        padding: 0 0.5em;
+        &:active {
+            color: yellow;
+        }
+    }
+    .shadow {
+        background: #ccc;
+        width: 100%;
+        height: $tab-height;
+    }
+}
+
+.button-game {
+    background: $button-color;
+    width: 2.5em;
+    position: absolute;
+    height: 2.5em;
+    right: 5%;
+    top: calc(98% - (#{$size-controller} / 2 + #{$size-button} / 2));
+    border-radius: 100%;
+    border: 2px solid #9c9b9b;
+    &:active {
+        background: darken($color: $button-color, $amount: 10);
+    }
+}

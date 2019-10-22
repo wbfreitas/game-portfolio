@@ -1,0 +1,17 @@
+<div class="controller-box">
+    <div class="controller">
+        <div class="tab-1 tab shadow"></div>
+        <div class="tab-2 tab shadow"></div>
+        <div class="tab-1 tab">
+            <span class="arrow icon-arrow-left" (touchend)="action(diraction.LEFT, false)" (touchstart)="action(diraction.LEFT, true)"></span>
+            <span class="arrow icon-arrow-right" (touchend)="action(diraction.RIGHT, false)" (touchstart)="action(diraction.RIGHT, true)"></span>
+        </div>
+        <div class="tab-2 tab">
+            <span class="arrow icon-arrow-left" (touchend)="action(diraction.UP, false)" (touchstart)="action(diraction.UP, true)"></span>
+            <span class="arrow icon-arrow-right" (touchend)="action(diraction.DOWN, false)" (touchstart)="action(diraction.DOWN, true)"></span>
+        </div>
+    </div>
+
+    <div class="button-game" (touchend)="action(diraction.SPACE, false)" (touchstart)="action(diraction.SPACE, true)">
+    </div>
+</div>
