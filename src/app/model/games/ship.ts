@@ -31,6 +31,9 @@ export default class Ship extends Sprinte implements IAnimation {
             !this.interations.keyPressed(DIRACTION.SPACE);
     }
 
+    
+
+
     startPosition() {
         this.timeInumme = 0;
         this.diraction = DIRACTION.UP;

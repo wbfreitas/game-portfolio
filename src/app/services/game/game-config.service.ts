@@ -53,7 +53,7 @@ export class GameConfigService {
     this.update();
   }
 
-  private nextLevel() {
+   nextLevel() {
     this.showNextLevel = true;
     this.config.isEnabled = false;
     this.level++;
