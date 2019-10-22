@@ -8,6 +8,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { NextLevelComponent } from './components/next-level/next-level.component';
 import { GameOverComponent } from './components/game-over/game-over.component';
 import { ControllerComponent } from './components/controller/controller.component';
+import InteractionService from './services/interaction.service';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { ControllerComponent } from './components/controller/controller.componen
     BrowserModule,
     AppRoutingModule,
   ],
-  providers: [GameConfigService],
-  bootstrap: [GameComponent]
+  providers: [InteractionService, GameConfigService],
+  bootstrap: [ GameComponent]
 })
 export class AppModule { }

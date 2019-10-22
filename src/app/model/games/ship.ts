@@ -1,10 +1,10 @@
 import Sprinte from '../../components/game/sprinte';
-import Interaction from './interaction';
 import IAnimation from './structure/IAnimation';
 import Explosion from './explosion';
 import Shot from './shot';
 import { DIRACTION } from './structure/diraction';
 import { GameConfigService } from 'src/app/services/game/game-config.service';
+import InteractionService from 'src/app/services/interaction.service';
 
 export default class Ship extends Sprinte implements IAnimation {
 
@@ -17,8 +17,10 @@ export default class Ship extends Sprinte implements IAnimation {
     height = 40;
     imunne = true;
     timeInumme = 0;
-    constructor(context: any, private interations: Interaction, private gameConfig: GameConfigService) {
+    interations: InteractionService;
+    constructor(context: any, private gameConfig: GameConfigService) {
         super(context, 1, 1);
+        this.interations = gameConfig.interactions;
         this.interval = 60;
         this.startPosition();
         this.nextLevel();

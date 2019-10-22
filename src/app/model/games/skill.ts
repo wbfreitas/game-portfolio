@@ -1,9 +1,10 @@
 import Sprinte from '../../components/game/sprinte';
-import Interaction from './interaction';
+import Interaction from '../../services/interaction.service';
 import IAnimation from './structure/ianimation';
 import Explosion from './explosion';
 import Shot from './shot';
 import { GameConfigService } from 'src/app/services/game/game-config.service';
+import InteractionService from '../../services/interaction.service';
 
 export default class Skill extends Sprinte implements IAnimation {
     private speed: number = 0.2;
@@ -13,14 +14,20 @@ export default class Skill extends Sprinte implements IAnimation {
     width = 30;
     height = 30;
     private rotateSpeed = 2;
-    constructor(context: any, private interations: Interaction, private gameConfig: GameConfigService) {
+    interations: InteractionService;
+    constructor(context: any, private gameConfig: GameConfigService) {
         super(context, 1, 1);
+        this.interations = gameConfig.interactions;
         this.interval = 60;
         this.nextLevel();
         this.positionRandom();
         if (Math.floor(Math.random() * (2))) {
             this.changeDiraction();
         }
+    }
+
+    setClickImage() {
+        this.image.addEventListener('click', console.log);
     }
 
     positionRandom() {

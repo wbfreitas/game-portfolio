@@ -3,6 +3,13 @@ $size-button: 2.5em;
 $tab-height: 2.5em;
 $reduce-size-front-tab: 0.5em;
 $button-color: #ff0000;
+.controller-box {
+    display: none;
+    @media only screen and (max-width: 600px) {
+        display: block;
+    }
+}
+
 .controller {
     position: absolute;
     width: $size-controller;

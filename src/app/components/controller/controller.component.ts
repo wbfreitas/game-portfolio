@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import InteractionService from 'src/app/services/interaction.service';
+import {DIRACTION} from 'src/app/model/games/structure/diraction';
 
 @Component({
   selector: 'app-controller',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ControllerComponent implements OnInit {
 
-  constructor() { }
+ diraction =  DIRACTION;
+  constructor(private interaction: InteractionService) { }
 
   ngOnInit() {
   }
 
+  action(diraction: number, status: boolean) {
+    this.interaction.addEvent(diraction, status);
+  }
 }
