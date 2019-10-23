@@ -42,10 +42,10 @@ export default class Skill extends Sprinte implements IAnimation {
 
     update() {
         var ctx = this.context;
-        if (this.x > ctx.canvas.width - 30 || this.x < 0)
+        if (this.x > ctx.canvas.width - this.width || this.x < this.width)
             this.speedX *= -1;
 
-        if (this.y > ctx.canvas.height - 30 || this.y < 0)
+        if (this.y > ctx.canvas.height - this.height || this.y < this.height)
             this.speedY *= -1;
 
         this.x += this.speedX;

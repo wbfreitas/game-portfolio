@@ -125,8 +125,7 @@ export class GameConfigService {
   newSong(path: string) {
     const song = new Audio();
     song.src = path;
-    // song.volume = 0.2;
-    song.volume = 0;
+     song.volume = 0.2;
     song.load();
     return song;
   }
