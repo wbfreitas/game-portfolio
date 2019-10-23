@@ -1,5 +1,4 @@
 import Sprinte from '../../components/game/sprinte';
-import Interaction from '../../services/interaction.service';
 import IAnimation from './structure/ianimation';
 import Explosion from './explosion';
 import Shot from './shot';
@@ -11,8 +10,8 @@ export default class Skill extends Sprinte implements IAnimation {
     private speedX: number = 0.2;
     private speedY: number = 0.2;
     private rotate = 0;
-    width = 30;
-    height = 30;
+     width = 30;
+     height = 30;
     private rotateSpeed = 2;
     interations: InteractionService;
     constructor(context: any, private gameConfig: GameConfigService) {

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DIRACTION } from 'src/app/model/games/structure/diraction';
 import { Subject, Observable } from 'rxjs';
 
 

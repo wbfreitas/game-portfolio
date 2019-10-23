@@ -6,9 +6,8 @@ import { GameOverComponent } from './components/game-over/game-over.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'game', pathMatch: 'full'},
   {
-  path: 'game', component: LoadingComponent,  
+  path: '', component: LoadingComponent,  
 }, {
   path: 'next-level', component: NextLevelComponent
 }, {

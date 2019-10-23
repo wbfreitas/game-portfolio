@@ -3,7 +3,6 @@ import { Router }  from '@angular/router';
 import GameConfig from 'src/app/model/games/constants/game-config';
 import Skill from 'src/app/model/games/skill';
 import Ship from 'src/app/model/games/ship';
-import Interaction from 'src/app/services/interaction.service';
 import Animation from './animation';
 import IAnimation from '../../model/games/structure/IAnimation';
 import { Observable, Subject } from 'rxjs';
@@ -15,7 +14,7 @@ import InteractionService from 'src/app/services/interaction.service';
 })
 export class GameConfigService {
 
-  private level = 0;
+  level = 0;
   private imgs = [];
   private frames = [];
   private skills = [];
@@ -25,7 +24,12 @@ export class GameConfigService {
   private progress = new Subject<any>();
   private animation: Animation;
   showNextLevel = false;
-  constructor(private router: Router, public interactions: InteractionService) {
+  interactions = new InteractionService();
+  constructor(private router: Router) {
+  }
+
+  porcentSize() {
+    
   }
 
   setup(canvas: HTMLCanvasElement) {
@@ -151,5 +155,4 @@ export class GameConfigService {
   getLevel(): Observable<any> {
     return this.levelO.asObservable();
   }
-
 }
